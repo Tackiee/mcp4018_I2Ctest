@@ -18,8 +18,14 @@ void loop() {
   Wire.write(value);
   Wire.endTransmission(); //スレーブデバイス(MCP4018)へのデータ送信を完了する．
 
-  Serial.print("resistor data = " + (value / 127.0 * 10.0) + "kΩ"); //抵抗値(Vss→W間)を疑似表示．キロオーム(kΩ)でシリアル出力．(最大が10kΩ，全ステップ数が128なので，左のような計算をしている．）
-  Serial.println(" Voltage = " + (pin0 * 1024.0 / 5.0) + "V");      //Vss-W間の電位差をボルト(V)でシリアル出力
+  float resist = value / 127.0 * 10.0;
+  float volt = pin0 / 1024.0 * 5.0;
+  //Serial.print("resistor data = "); 
+  //Serial.print(resist);  //抵抗値(Vss→W間)を疑似表示．キロオーム(kΩ)でシリアル出力．(最大が10kΩ，全ステップ数が128なので，左のような計算をしている．）
+  //Serial.print(" kΩ ");
+  Serial.print("Voltage = ");
+  Serial.print(volt);
+  Serial.println(" V");
 
   value += 5; //5ステップずつ増加させる．
 
@@ -28,5 +34,5 @@ void loop() {
     value = 0;
   }
 
-  delay(500);
+  delay(50);
 }
